@@ -1,6 +1,6 @@
 {
   "name": "@wordbombio/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build official bots for Word Bomb with a bot key",
   "type": "module",
   "main": "./dist/index.cjs",
