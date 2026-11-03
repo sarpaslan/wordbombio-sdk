@@ -106,6 +106,22 @@ There are two kinds of account. A **bot** is a player: it joins rooms, plays and
 
 A brand new account can't send DMs or use chat commands for its first 24 hours. Both kinds always show a bot badge, and a banned owner, or one who loses the Bot Developer role, takes every key down with them.
 
+## Acceptable use
+
+The code is MIT licensed. Using it with Word Bomb also means following the [Terms of Service](https://legal.wordbomb.io/terms) and these rules. Breaking them gets the bot's key reset and the bot banned, and the developer's account banned along with every bot it owns.
+
+Not allowed:
+
+- Cheats or anything that helps a player win: solvers, word finders, hint or answer tools, auto typers, or anything that plays for a human account.
+- Sending live prompts, answers or hints to players during a game, in the game or anywhere else.
+- Logging in human accounts through the package, or sharing, selling or trading bot keys.
+- Spam: unwanted DMs, mass invites, or flooding rooms with posts or commands.
+- Collecting player data beyond what the bot needs, or selling or publishing it.
+- Pretending to be staff, another player or another bot.
+- Getting around bans, rate limits, consent rules or the bot kill switch.
+
+Good uses: bots that play fair in rooms that allow bots, chat bots, game trackers and stat bots for players who add them, and fun commands.
+
 ## Rate limits
 
 Per bot or app account:

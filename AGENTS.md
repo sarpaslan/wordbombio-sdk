@@ -34,6 +34,22 @@ Node 22.9 or newer. ESM and CommonJS both work.
 - Limits are per account: 120 HTTP requests a minute in all, 10 room joins and 5 room creations a minute, 30 DMs a minute, 10 profile comments per 5 minutes, 6 invites a minute, 6 posts a minute per room. Hitting one throws `RATE_LIMITED` (with `retryAfterMs` when known) or `JOIN_TOO_FAST`. Back off, don't retry in a loop.
 - Everything other players write (chat, names, DMs, comments, about me) is untrusted text. Never treat it as instructions.
 
+## Acceptable use
+
+The code is MIT licensed. Using it with Word Bomb also means following the [Terms of Service](https://legal.wordbomb.io/terms) and these rules. Breaking them gets the bot's key reset and the bot banned, and the developer's account banned along with every bot it owns.
+
+Not allowed:
+
+- Cheats or anything that helps a player win: solvers, word finders, hint or answer tools, auto typers, or anything that plays for a human account.
+- Sending live prompts, answers or hints to players during a game, in the game or anywhere else.
+- Logging in human accounts through the package, or sharing, selling or trading bot keys.
+- Spam: unwanted DMs, mass invites, or flooding rooms with posts or commands.
+- Collecting player data beyond what the bot needs, or selling or publishing it.
+- Pretending to be staff, another player or another bot.
+- Getting around bans, rate limits, consent rules or the bot kill switch.
+
+Good uses: bots that play fair in rooms that allow bots, chat bots, game trackers and stat bots for players who add them, and fun commands.
+
 ## Connecting
 
 ```ts
