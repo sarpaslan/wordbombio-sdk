@@ -59,5 +59,6 @@
   },
   "bin": {
     "wordbomb": "dist/cli.js"
-  }
+  },
+  "license": "MIT"
 }
