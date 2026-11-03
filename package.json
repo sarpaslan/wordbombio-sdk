@@ -1,0 +1,63 @@
+{
+  "name": "@wordbombio/sdk",
+  "version": "0.1.0",
+  "description": "Build official bots for Word Bomb with a bot key",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "AGENTS.md"
+  ],
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "prebuild": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "example": "node --env-file-if-exists=.env --import tsx examples/autoplayer.ts",
+    "example:chat": "node --env-file-if-exists=.env --import tsx examples/chatbot.ts",
+    "example:tracker": "node --env-file-if-exists=.env --import tsx examples/tracker.ts",
+    "example:hyphens": "node --env-file-if-exists=.env --import tsx examples/hyphen-champion.ts",
+    "mcp": "tsx src/cli.ts mcp",
+    "prepublishOnly": "npm run typecheck && npm run build"
+  },
+  "keywords": [
+    "wordbomb",
+    "word bomb",
+    "bot",
+    "mcp",
+    "sdk"
+  ],
+  "dependencies": {
+    "@colyseus/sdk": "^0.18.2",
+    "msgpackr": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.4",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "wordbomb": "dist/cli.js"
+  }
+}
