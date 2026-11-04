@@ -8,6 +8,7 @@ export type ErrorCode =
   | "HTTP"
   | "TIMEOUT"
   | "REALTIME_DOWN"
+  | "REPLACED"
   | "NOT_IN_ROOM"
   | "ROOM_NOT_FOUND"
   | "JOIN_FAILED"

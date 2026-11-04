@@ -329,6 +329,7 @@ Everything throws `WordBombError` with a `code`, including network failures (`HT
 | `APP_NO_ROOMS` | Applications never join rooms. They get app rooms from `bot.apps`. |
 | `ALREADY_IN_ROOM` | The server still holds your seat in that room. |
 | `ROOM_NOT_FOUND` / `JOIN_FAILED` / `KICKED` / `NOT_IN_ROOM` | Room problems. |
+| `REPLACED` | Another process logged in with the same key, so this one stopped getting DMs, invites, commands and buttons. It doesn't reconnect. Run one process per key. |
 | `REALTIME_DOWN` / `TIMEOUT` | The live connection is reconnecting, try again shortly. `TIMEOUT` also means an interaction's 14 second answer window passed. |
 | `LINK_DROPPED` | DMs can't contain links. |
 | `HTTP` | Anything else. `status` is set. |
@@ -339,7 +340,7 @@ Everything throws `WordBombError` with a `code`, including network failures (`HT
 claude mcp add wordbomb -e WORDBOMB_BOT_KEY=wbb_... -e WORDBOMB_TARGET=prod -- npx -y @wordbombio/sdk mcp
 ```
 
-Or use the `.mcp.json` that `init` writes. The server loads `.env` from the folder it starts in, so it uses the same key, target and locale as your bot.
+Or use the `.mcp.json` that `init` writes. The server loads `.env` from the folder it starts in, so it uses the same key, target and locale as your bot. Run only one of them at a time: a second process on the same key takes over the live connection, and the first gets `REPLACED`.
 
 Environment:
 - `WORDBOMB_WORDS=en-US=./en.txt,tr-TR=./tr.txt` turns on autoplay in every room so turns get answered while the agent thinks.

@@ -13,6 +13,7 @@ export interface RealtimeEvents {
   up: void;
   down: { code: number; retryInMs: number };
   banned: void;
+  replaced: void;
   closed: void;
 }
 
@@ -62,11 +63,14 @@ export class Realtime extends Emitter<RealtimeEvents> {
         this.emit("banned", undefined);
         return;
       }
+      if (ev.code === REALTIME_CLOSE.REPLACED || ev.code === REALTIME_CLOSE.REPLACED_ELSEWHERE) {
+        this.emit("replaced", undefined);
+        return;
+      }
       const expired = ev.code === REALTIME_CLOSE.TOKEN_EXPIRED;
       let delay = this.backoff;
       this.backoff = Math.min(this.backoff * 2, MAX_BACKOFF);
-      if (ev.code === REALTIME_CLOSE.REPLACED || ev.code === REALTIME_CLOSE.REPLACED_ELSEWHERE) delay = MAX_BACKOFF;
-      else if (expired && !this.fastRetryUsed) {
+      if (expired && !this.fastRetryUsed) {
         this.fastRetryUsed = true;
         delay = FAST_RETRY;
       }

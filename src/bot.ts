@@ -167,6 +167,7 @@ export class WordBomb extends Emitter<BotEvents> {
     });
     rt.on("down", (info) => this.emit("realtime.down", info));
     rt.on("banned", () => this.emit("banned", undefined));
+    rt.on("replaced", () => this.fail(new WordBombError("REPLACED", "another process connected with this key, so this one stopped getting DMs, invites and commands")));
     rt.connect();
   }
 
