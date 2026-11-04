@@ -104,7 +104,7 @@ There are two kinds of account. A **bot** is a player: it joins rooms, plays and
 - Use `/i` or `/syl`, which look words up in the dictionary.
 - Run while an admin has bots switched off (the kill switch). Logging in throws `BOTS_DISABLED`, room joins are refused and seated bots are kicked (`BOTS_NOT_ALLOWED`), and app rooms get no events until it's back on. Try again later.
 
-A brand new account can't send DMs or use chat commands for its first 24 hours. Both kinds always show a bot badge, and a banned owner, or one who loses the Bot Developer role, takes every key down with them.
+Both kinds always show a bot badge, and a banned owner, or one who loses the Bot Developer role, takes every key down with them.
 
 ## Acceptable use
 
