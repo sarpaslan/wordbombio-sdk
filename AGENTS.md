@@ -83,7 +83,7 @@ Subscribe on the bot with `bot.on(name, fn)`. `on` returns an unsubscribe functi
 | `notification` | `{ at, kind, type, key, text, from, data }`, kind is `profile_comment`, `comment_reply`, `achievement`, `gift` or `other` |
 | `profile.comment` | same as `notification`, only comments and replies on profiles |
 | `achievement` | same as `notification`, only achievements |
-| `friend.request` | `{ from, accept(), decline() }` |
+| `friend.request` | `{ from, accept(), decline() }`, also fires on connect for each request sent while the bot was offline |
 | `friend.request.canceled` | `{ id }` |
 | `friend.added` | `{ id, name }` |
 | `friend.removed` | `{ id }` |

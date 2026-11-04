@@ -15,7 +15,7 @@ import { Session, type BotKind } from "./session.js";
 import { Comments, Dms, Friends, friendRoom, OwnProfile, Users, type DirectMessage, type FriendRequest, type Invite, type UserLike } from "./social.js";
 import { resolveTarget, type Target, type TargetName } from "./targets.js";
 import type { FriendRoom, Notification, UserRef } from "./types.js";
-import { list, record, str } from "./util.js";
+import { list, num, record, str } from "./util.js";
 
 const NOTIFY_MAX = 200;
 
@@ -75,6 +75,7 @@ export class WordBomb extends Emitter<BotEvents> {
   private readonly client: Client;
   private readonly interactions: Interactions;
   private closed = false;
+  private readonly requested = new Set<string>();
 
   static async connect(opts: ConnectOptions): Promise<WordBomb> {
     const bot = new WordBomb(opts);
@@ -183,6 +184,19 @@ export class WordBomb extends Emitter<BotEvents> {
     return this.users.nameOf(id) || "a friend";
   }
 
+  private request(from: UserRef): void {
+    if (this.requested.has(from.id)) return;
+    this.requested.add(from.id);
+    const req = this.friends.friendRequest(from);
+    this.emit("friend.request", { ...req, decline: () => { this.requested.delete(from.id); return req.decline(); } });
+  }
+
+  private async pendingRequests(): Promise<void> {
+    if (this.kind === "app") return;
+    const { incoming } = await this.friends.list();
+    for (const from of incoming) this.request(from);
+  }
+
   private onRealtime(e: string, d: unknown): void {
     const data = record(d);
     const id = str(data.id);
@@ -213,6 +227,7 @@ export class WordBomb extends Emitter<BotEvents> {
           const fid = str(f.id);
           if (fid) this.friends.online.set(fid, { status: str(f.status, "online"), room: friendRoom(f.room) });
         }
+        if (num(data.requestsCount) > 0) this.pendingRequests().catch((e: unknown) => this.fail(e));
         return;
       case "friend:room": {
         if (!id) return;
@@ -234,15 +249,19 @@ export class WordBomb extends Emitter<BotEvents> {
         return;
       case "friend:request": {
         const ref = this.userRef(data.friend);
-        if (ref) this.emit("friend.request", this.friends.friendRequest(ref));
+        if (ref) this.request(ref);
         return;
       }
       case "friend:request_canceled":
-        if (id) this.emit("friend.request.canceled", { id });
+        if (!id) return;
+        this.requested.delete(id);
+        this.emit("friend.request.canceled", { id });
         return;
       case "friend:added": {
         const ref = this.userRef(data.friend);
-        if (ref) this.emit("friend.added", ref);
+        if (!ref) return;
+        this.requested.delete(ref.id);
+        this.emit("friend.added", ref);
         return;
       }
       case "friend:removed":
